@@ -1,0 +1,57 @@
+# General settings
+seed: 4201337  # Random seed for reproducibility
+device: "mps"  # Options: 'cuda', 'mps', 'cpu'
+
+# Data settings
+dataset:
+  name: "MNIST"
+  data_dir: "../data"
+  train_batch_size: 512
+  test_batch_size: 32
+  num_classes: 10
+  num_workers: 0
+  normalize:
+    mean: 0.1307
+    std: 0.3081
+
+# Model settings
+model:
+  conv_layers:
+    - {in_channels: 1, out_channels: 16, kernel_size: 3, stride: 1, padding: 1}
+    - {in_channels: 16, out_channels: 32, kernel_size: 3, stride: 1, padding: 1}
+  fc_layers:
+    - {in_features: 6272, out_features: 128}
+    - {in_features: 128, out_features: 10}
+  activation: "ReLU"
+  use_batch_norm: True
+
+# Training settings
+training:
+  epochs: 3
+  log_interval: 10
+  loss_function: "CrossEntropyLoss"
+
+# Optimizer settings
+optimizer:
+  optimizers:
+    - "Adam"
+    - "Adadelta"
+    - "SGD"
+  learning_rates:
+    Adam: 0.0005
+    Adadelta: 1.0
+    SGD: 0.05
+  momentum: 0.0
+  weight_decay: 0.0001
+
+# Learning rate scheduler
+scheduler:
+  type: "ExponentialLR"  # Options: 'StepLR', 'ExponentialLR'
+  step_size: 10
+  gamma: 0.8
+
+# Logging settings
+logging:
+  save_model: True
+  save_folder_path: "models"
+  visualize_training: True
